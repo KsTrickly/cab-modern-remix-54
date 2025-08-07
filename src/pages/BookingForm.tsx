@@ -343,7 +343,7 @@ const BookingForm = () => {
       });
       
       // Redirect to ticket page with booking ID
-      navigate(`/ticket/${booking.id}`);
+      navigate(`/ticket/${booking.id}?destination=${encodeURIComponent(searchParams.get('destination') || '')}`);
     } catch (error) {
       console.error('Unexpected error creating booking:', error);
       toast({
