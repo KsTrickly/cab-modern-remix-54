@@ -315,7 +315,7 @@ export const BookingTicket: React.FC<BookingTicketProps> = ({
             
             <div className="flex justify-between">
               <span>Amount Paid:</span>
-              <span>Unpaid</span>
+              <span>{getPaymentStatusLabel(booking.payment_status)}</span>
             </div>
             
             <div className="flex justify-between font-bold">
