@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 
 interface BookingData {
@@ -58,6 +59,7 @@ export const BookingTicket: React.FC<BookingTicketProps> = ({
   fareBreakdown, 
   ticketId = booking.ticket_id || `RAC${booking.id.slice(-8).toUpperCase()}` 
 }) => {
+  const [searchParams] = useSearchParams();
   const getTripTypeLabel = (type: string) => {
     switch (type) {
       case 'round': return 'Round Trip';
@@ -104,6 +106,13 @@ export const BookingTicket: React.FC<BookingTicketProps> = ({
   };
 
   const getDestinationText = () => {
+    // Get destination from search parameters first
+    const destinationFromParams = searchParams.get('destination');
+    if (destinationFromParams) {
+      return destinationFromParams;
+    }
+    
+    // Fallback to existing logic
     if (booking.trip_type === 'airport') {
       return booking.airport_name || 'Airport';
     }
@@ -111,6 +120,21 @@ export const BookingTicket: React.FC<BookingTicketProps> = ({
       return `Local - ${booking.pickup_city?.name || 'N/A'}`;
     }
     return booking.destination_city?.name || 'N/A';
+  };
+
+  const getCurrentDateTime = () => {
+    const now = new Date();
+    const date = now.toLocaleDateString('en-IN', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+    const time = now.toLocaleTimeString('en-IN', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    });
+    return `${date} ${time}`;
   };
 
   const balanceAmount = booking.total_amount - (booking.advance_amount || 0);
@@ -180,7 +204,7 @@ export const BookingTicket: React.FC<BookingTicketProps> = ({
         <Card className="p-4 bg-blue-50 border border-blue-200">
           <div className="text-center">
             <div className="font-bold text-sm text-blue-600 mb-1">Booking On</div>
-            <div className="text-sm text-black">{formatDate(booking.pickup_date)} {formatTime(booking.pickup_time)}</div>
+            <div className="text-sm text-black">{getCurrentDateTime()}</div>
           </div>
         </Card>
         
