@@ -91,6 +91,18 @@ export const VehicleCard = ({
             <span>GST (5%):</span>
             <span>₹{fareBreakdown.gst.toFixed(2)}</span>
           </div>
+          <div className="flex justify-between text-red-600">
+            <span>Tolls tax:</span>
+            <span>Excluded</span>
+          </div>
+          <div className="flex justify-between text-red-600">
+            <span>State Tax:</span>
+            <span>Excluded</span>
+          </div>
+          <div className="flex justify-between text-red-600">
+            <span>Parking:</span>
+            <span>Excluded</span>
+          </div>
           <hr className="my-1" />
           <div className="flex justify-between font-bold">
             <span>Total:</span>
