@@ -343,7 +343,11 @@ const BookingForm = () => {
       });
       
       // Redirect to ticket page with booking ID
-      navigate(`/ticket/${booking.id}?destination=${encodeURIComponent(searchParams.get('destination') || '')}`);
+      // Get destination city name from search params or find it in cities data
+      const destinationName = searchParams.get('destination') || 
+                             cities?.find(city => city.id === destinationCityId)?.name || 
+                             searchParams.get('destinationCity') || '';
+      navigate(`/ticket/${booking.id}?destination=${encodeURIComponent(destinationName)}`);
     } catch (error) {
       console.error('Unexpected error creating booking:', error);
       toast({
