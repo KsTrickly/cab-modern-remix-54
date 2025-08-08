@@ -106,28 +106,21 @@ export const BookingTicket: React.FC<BookingTicketProps> = ({
   };
 
   const getDestinationText = () => {
-    // Prioritize destination_address from database (editable in admin)
-    if (booking.destination_address) {
-      return booking.destination_address;
-    }
-    
-    // Then check destination city from database
-    if (booking.destination_city?.name) {
-      return booking.destination_city.name;
-    }
-    
-    // Then get destination from search parameters
+    // Destination should reflect the user's selected city from the URL when available
     const destinationFromParams = searchParams.get('destination');
-    if (destinationFromParams) {
+    if (destinationFromParams && destinationFromParams.trim() !== '') {
       return destinationFromParams;
     }
-    
-    // Fallback based on trip type
+
+    // Fallbacks when URL param is not present
     if (booking.trip_type === 'airport') {
       return booking.airport_name || 'Airport';
     }
     if (booking.trip_type === 'local') {
       return `Local - ${booking.pickup_city?.name || 'N/A'}`;
+    }
+    if (booking.destination_city?.name) {
+      return booking.destination_city.name;
     }
     return 'N/A';
   };
