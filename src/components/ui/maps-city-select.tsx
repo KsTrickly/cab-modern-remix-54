@@ -51,9 +51,17 @@ export const MapsCitySelect = ({
       if (city) {
         setSelectedCity({ id: city.id, name: city.name });
         setSearchValue(city.name);
-      } else if (value.startsWith('google_maps_') && selectedCity) {
-        // Keep the Google Maps selected city if it's already set
-        setSearchValue(selectedCity.name);
+      } else if (value.startsWith('google_maps_')) {
+        // Handle Google Maps synthetic IDs: google_maps_${cityName}_${placeId}
+        const raw = value.slice('google_maps_'.length);
+        const lastUnderscore = raw.lastIndexOf('_');
+        const cityName = lastUnderscore > -1 ? raw.slice(0, lastUnderscore) : raw;
+        setSelectedCity({ id: value, name: cityName });
+        setSearchValue(cityName);
+      } else {
+        // Unknown value, reset visible text but keep the raw value
+        setSelectedCity(null);
+        setSearchValue('');
       }
     } else if (!value) {
       setSelectedCity(null);
