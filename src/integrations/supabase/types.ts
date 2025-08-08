@@ -69,6 +69,7 @@ export type Database = {
           created_at: string
           destination_address: string | null
           destination_city_id: string | null
+          destination_name: string | null
           id: string
           number_of_days: number
           number_of_persons: number | null
@@ -97,6 +98,7 @@ export type Database = {
           created_at?: string
           destination_address?: string | null
           destination_city_id?: string | null
+          destination_name?: string | null
           id?: string
           number_of_days: number
           number_of_persons?: number | null
@@ -125,6 +127,7 @@ export type Database = {
           created_at?: string
           destination_address?: string | null
           destination_city_id?: string | null
+          destination_name?: string | null
           id?: string
           number_of_days?: number
           number_of_persons?: number | null
