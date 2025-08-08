@@ -19,6 +19,7 @@ interface Booking {
   return_date: string;
   pickup_address?: string;
   destination_address?: string;
+  destination_name?: string;
   number_of_days: number;
   number_of_persons?: number;
   total_amount: number;
@@ -51,6 +52,7 @@ export const BookingEditDialog = ({ booking, isOpen, onClose, onSave }: BookingE
         return_date: booking.return_date || '',
         pickup_address: booking.pickup_address || '',
         destination_address: booking.destination_address || '',
+        destination_name: (booking as any).destination_name || '',
         number_of_days: booking.number_of_days,
         number_of_persons: booking.number_of_persons || 1,
         total_amount: booking.total_amount,
@@ -262,6 +264,15 @@ export const BookingEditDialog = ({ booking, isOpen, onClose, onSave }: BookingE
               value={formData.pickup_address || ''}
               onChange={(e) => handleInputChange('pickup_address', e.target.value)}
               rows={3}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="destination_name">Destination (Itinerary)</Label>
+            <Input
+              id="destination_name"
+              value={(formData as any).destination_name || ''}
+              onChange={(e) => handleInputChange('destination_name' as keyof Booking, e.target.value)}
             />
           </div>
 

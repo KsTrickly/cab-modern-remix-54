@@ -21,6 +21,7 @@ interface Booking {
   return_date: string;
   pickup_address?: string;
   destination_address?: string;
+  destination_name?: string;
   number_of_days: number;
   number_of_persons?: number;
   total_amount: number;

@@ -18,6 +18,7 @@ interface BookingData {
   advance_amount?: number;
   pickup_address?: string;
   destination_address?: string;
+  destination_name?: string;
   number_of_days: number;
   vehicle?: {
     name: string;
@@ -112,7 +113,13 @@ export const BookingTicket: React.FC<BookingTicketProps> = ({
       return destinationFromParams;
     }
 
-    // Fallbacks when URL param is not present
+    // Admin-edited destination name fallback
+    const adminDestination = (booking as any).destination_name as string | undefined;
+    if (adminDestination && adminDestination.trim() !== '') {
+      return adminDestination;
+    }
+
+    // Fallbacks when neither URL param nor admin override is present
     if (booking.trip_type === 'airport') {
       return booking.airport_name || 'Airport';
     }
