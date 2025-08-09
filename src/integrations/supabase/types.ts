@@ -82,6 +82,7 @@ export type Database = {
           return_date: string | null
           ticket_id: string | null
           total_amount: number
+          total_km_override: number | null
           trip_type: string | null
           updated_at: string
           user_email: string | null
@@ -111,6 +112,7 @@ export type Database = {
           return_date?: string | null
           ticket_id?: string | null
           total_amount: number
+          total_km_override?: number | null
           trip_type?: string | null
           updated_at?: string
           user_email?: string | null
@@ -140,6 +142,7 @@ export type Database = {
           return_date?: string | null
           ticket_id?: string | null
           total_amount?: number
+          total_km_override?: number | null
           trip_type?: string | null
           updated_at?: string
           user_email?: string | null

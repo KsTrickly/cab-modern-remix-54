@@ -23,6 +23,7 @@ interface Booking {
   number_of_days: number;
   number_of_persons?: number;
   total_amount: number;
+  total_km_override?: number | null;
   advance_amount?: number;
   advance_paid?: boolean;
   payment_status?: string;
@@ -56,6 +57,7 @@ export const BookingEditDialog = ({ booking, isOpen, onClose, onSave }: BookingE
         number_of_days: booking.number_of_days,
         number_of_persons: booking.number_of_persons || 1,
         total_amount: booking.total_amount,
+        total_km_override: (booking as any).total_km_override ?? null,
         advance_amount: booking.advance_amount || 0,
         advance_paid: booking.advance_paid || false,
         payment_status: booking.payment_status || 'pending',
@@ -206,6 +208,21 @@ export const BookingEditDialog = ({ booking, isOpen, onClose, onSave }: BookingE
                 value={formData.total_amount || 0}
                 onChange={(e) => handleInputChange('total_amount', parseFloat(e.target.value))}
                 required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="total_km_override">Total KM (override)</Label>
+              <Input
+                id="total_km_override"
+                type="number"
+                step="1"
+                min="0"
+                value={formData.total_km_override ?? ''}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  handleInputChange('total_km_override' as keyof Booking, v === '' ? null : parseFloat(v));
+                }}
               />
             </div>
 

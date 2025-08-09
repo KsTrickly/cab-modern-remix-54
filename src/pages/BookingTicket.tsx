@@ -176,10 +176,15 @@ const BookingTicketPage = () => {
   const dailyKmLimit = vehicleRate?.daily_km_limit || 300;
   const includedKm = dailyKmLimit * booking.number_of_days;
   
-  // Get total KM from vehicle rate card - ensure it's a number
-  const totalKm = (vehicleRate && 'total_running_km' in vehicleRate && typeof vehicleRate.total_running_km === 'number') 
-    ? vehicleRate.total_running_km 
-    : includedKm;
+  // Admin override takes precedence
+  const overrideTotalKm = (booking as any).total_km_override as number | null;
+
+  // Determine total KM: override > vehicle rate > included
+  const totalKm = (overrideTotalKm && overrideTotalKm > 0)
+    ? overrideTotalKm
+    : ((vehicleRate && 'total_running_km' in vehicleRate && typeof (vehicleRate as any).total_running_km === 'number') 
+        ? (vehicleRate as any).total_running_km 
+        : includedKm);
   
   const extraKm = Math.max(0, totalKm - includedKm);
 
@@ -194,8 +199,8 @@ const BookingTicketPage = () => {
     includedKm: includedKm,
     extraKm: extraKm,
     dailyKmLimit: dailyKmLimit,
-    extraPerKmCharge: vehicleRate?.extra_per_km_charge || 15,
-    extraPerHourCharge: vehicleRate?.extra_per_hour_charge || 100
+    extraPerKmCharge: (vehicleRate as any)?.extra_per_km_charge || 15,
+    extraPerHourCharge: (vehicleRate as any)?.extra_per_hour_charge || 100
   };
 
   const ticketId = booking.ticket_id || `RAC${booking.id.slice(-8).toUpperCase()}`;
