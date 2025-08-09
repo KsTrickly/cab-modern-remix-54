@@ -26,25 +26,55 @@ export const generatePDF = async (
     throw new Error(`Element with id "${elementId}" not found`);
   }
 
-  const opt = {
+  const opt: any = {
     margin,
     filename,
     image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { 
+    html2canvas: {
       scale: quality,
       useCORS: true,
       allowTaint: false,
       backgroundColor: '#ffffff'
     },
-    jsPDF: { 
-      unit: 'mm', 
-      format, 
-      orientation 
-    }
+    jsPDF: {
+      unit: 'mm',
+      format,
+      orientation
+    },
+    pagebreak: { mode: ['avoid-all'] }
   };
 
   try {
-    await html2pdf().set(opt).from(element).save();
+    // Ensure fonts are loaded for accurate rendering
+    try { await (document as any).fonts?.ready; } catch {}
+
+    // Temporarily scale the ticket to guarantee a single A4 page
+    const pxPerMm = 96 / 25.4;
+    const pageSize = { widthMm: orientation === 'landscape' ? 297 : 210, heightMm: orientation === 'landscape' ? 210 : 297 };
+    const margins = Array.isArray(margin) ? margin : [margin, margin, margin, margin];
+    const [mt, , mb] = [margins[0] ?? 0, margins[1] ?? 0, margins[2] ?? margins[0] ?? 0];
+    const usableHeightPx = (pageSize.heightMm - (mt + mb)) * pxPerMm;
+
+    const originalStyle = (element.getAttribute('style') || '').toString();
+
+    const elementHeight = element.scrollHeight;
+    const scaleNeeded = elementHeight > 0 ? Math.min(1, usableHeightPx / elementHeight) : 1;
+
+    if (scaleNeeded < 1) {
+      // Scale down and expand width inversely so layout remains consistent
+      (element as HTMLElement).style.transformOrigin = 'top left';
+      (element as HTMLElement).style.transform = `scale(${scaleNeeded})`;
+      (element as HTMLElement).style.width = `calc(100% / ${scaleNeeded})`;
+    }
+
+    await (html2pdf as any)().set(opt).from(element).save();
+
+    // Restore original styles
+    if (originalStyle) {
+      element.setAttribute('style', originalStyle);
+    } else {
+      element.removeAttribute('style');
+    }
   } catch (error) {
     console.error('PDF generation failed:', error);
     throw new Error('Failed to generate PDF');
