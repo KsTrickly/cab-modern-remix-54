@@ -183,14 +183,14 @@ export const BookingTicket: React.FC<BookingTicketProps> = ({
       {/* Ticket ID */}
       <div className="mb-8">
         <div className="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg inline-block">
-          <h3 className="text-xl font-bold">
+          <h3 className="text-xl font-bold" data-ticket-id="true">
             TICKET ID: {ticketId}
           </h3>
         </div>
       </div>
 
       {/* Customer Details */}
-      <Card className="mb-8 p-6 bg-blue-50 border border-blue-200 shadow-lg">
+      <Card className="mb-8 p-6 pdf-pad bg-blue-50 border border-blue-200 shadow-lg">
         <h3 className="text-xl font-bold text-blue-600 mb-4 border-b border-blue-300 pb-3">
           Customer Details
         </h3>
@@ -210,7 +210,7 @@ export const BookingTicket: React.FC<BookingTicketProps> = ({
       </Card>
 
       {/* Trip Details */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 ticket-grid mb-8">
         <Card className="p-4 bg-blue-50 border border-blue-200">
           <div className="text-center">
             <div className="font-bold text-sm text-blue-600 mb-1">Booking On</div>
@@ -273,8 +273,8 @@ export const BookingTicket: React.FC<BookingTicketProps> = ({
       </div>
 
       {/* Pickup and Destination Details */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <Card className="p-6 bg-blue-50 border border-blue-200 shadow-lg">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ticket-grid mb-8">
+        <Card className="p-6 pdf-pad bg-blue-50 border border-blue-200 shadow-lg">
           <h4 className="font-bold mb-3 text-blue-600 text-lg">Pickup Details</h4>
           <div className="text-black">
             <div><span className="font-medium">Pickup City:</span> {booking.pickup_city?.name || 'N/A'}</div>
@@ -284,7 +284,7 @@ export const BookingTicket: React.FC<BookingTicketProps> = ({
           </div>
         </Card>
 
-        <Card className="p-6 bg-blue-50 border border-blue-200 shadow-lg">
+        <Card className="p-6 pdf-pad bg-blue-50 border border-blue-200 shadow-lg">
           <h4 className="font-bold mb-3 text-blue-600 text-lg">Destination (Itinerary)</h4>
           <div className="text-black">
             <div><span className="font-medium">Destination:</span> {getDestinationText()}</div>
@@ -296,12 +296,12 @@ export const BookingTicket: React.FC<BookingTicketProps> = ({
       </div>
 
       {/* Fare Details */}
-      <Card className="mb-8 p-6 bg-blue-50 border border-blue-200 shadow-lg">
+      <Card className="mb-8 p-6 pdf-pad bg-blue-50 border border-blue-200 shadow-lg">
         <h3 className="text-xl font-bold text-blue-600 mb-4 border-b border-blue-300 pb-3">
           Estimated Trip Fare
         </h3>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-black">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ticket-grid text-black">
           <div className="space-y-2">
             <div className="flex justify-between">
               <span>

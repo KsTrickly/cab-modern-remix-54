@@ -34,7 +34,8 @@ export const generatePDF = async (
       scale: quality,
       useCORS: true,
       allowTaint: false,
-      backgroundColor: '#ffffff'
+      backgroundColor: '#ffffff',
+      letterRendering: true
     },
     jsPDF: {
       unit: 'mm',
@@ -48,7 +49,8 @@ export const generatePDF = async (
     // Ensure fonts are loaded for accurate rendering
     try { await (document as any).fonts?.ready; } catch {}
 
-    // Temporarily scale the ticket to guarantee a single A4 page
+    // Apply print-friendly class and temporarily scale the ticket to guarantee a single A4 page
+    (element as HTMLElement).classList.add('pdf-export');
     const pxPerMm = 96 / 25.4;
     const pageSize = { widthMm: orientation === 'landscape' ? 297 : 210, heightMm: orientation === 'landscape' ? 210 : 297 };
     const margins = Array.isArray(margin) ? margin : [margin, margin, margin, margin];
@@ -75,6 +77,7 @@ export const generatePDF = async (
     } else {
       element.removeAttribute('style');
     }
+    (element as HTMLElement).classList.remove('pdf-export');
   } catch (error) {
     console.error('PDF generation failed:', error);
     throw new Error('Failed to generate PDF');

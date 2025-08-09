@@ -121,3 +121,14 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  /* PDF export compact styles */
+  #booking-ticket.pdf-export { padding: 16px !important; background: white !important; }
+  .pdf-export .pdf-pad { padding: 1rem !important; }
+  .pdf-export .ticket-grid { gap: 0.75rem !important; }
+  .pdf-export .shadow-2xl, .pdf-export .shadow-lg { box-shadow: none !important; }
+  .pdf-export .sticky { position: static !important; top: auto !important; }
+  .pdf-export [data-ticket-id] { color: hsl(var(--primary-foreground)) !important; }
+  .pdf-export * { -webkit-font-smoothing: antialiased; }
+}
