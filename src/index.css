@@ -124,11 +124,12 @@
 
 @layer utilities {
   /* PDF export compact styles */
-  #booking-ticket.pdf-export { padding: 16px !important; background: white !important; }
-  .pdf-export .pdf-pad { padding: 1rem !important; }
-  .pdf-export .ticket-grid { gap: 0.75rem !important; }
+  #booking-ticket.pdf-export { padding: 12px !important; background: hsl(var(--background)) !important; }
+  .pdf-export .pdf-pad { padding: 0.75rem !important; }
+  .pdf-export .ticket-grid { column-gap: 0.5rem !important; row-gap: 0.5rem !important; }
   .pdf-export .shadow-2xl, .pdf-export .shadow-lg { box-shadow: none !important; }
   .pdf-export .sticky { position: static !important; top: auto !important; }
-  .pdf-export [data-ticket-id] { color: hsl(var(--primary-foreground)) !important; }
+  .pdf-export [data-ticket-id] { color: hsl(var(--foreground)) !important; -webkit-text-fill-color: hsl(var(--foreground)) !important; text-shadow: none !important; }
+  .pdf-export .w-40 { width: 6rem !important; }
   .pdf-export * { -webkit-font-smoothing: antialiased; }
 }

@@ -29,9 +29,9 @@ export const generatePDF = async (
   const opt: any = {
     margin,
     filename,
-    image: { type: 'jpeg', quality: 0.98 },
+    image: { type: 'png', quality: 1 },
     html2canvas: {
-      scale: quality,
+      scale: Math.max(quality, (globalThis as any).devicePixelRatio || 1),
       useCORS: true,
       allowTaint: false,
       backgroundColor: '#ffffff',
