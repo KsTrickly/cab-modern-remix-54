@@ -182,7 +182,7 @@ export const BookingTicket: React.FC<BookingTicketProps> = ({
       </div>
 
       {/* Ticket ID */}
-      <div className="mb-8">
+      <div className="mb-8" data-hide-in-pdf="true">
         <div className="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg inline-block">
           <h3 className="text-xl font-bold" data-ticket-id="true">
             TICKET ID: {ticketId}

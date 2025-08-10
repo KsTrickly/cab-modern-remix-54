@@ -130,6 +130,7 @@
   .pdf-export .shadow-2xl, .pdf-export .shadow-lg { box-shadow: none !important; }
   .pdf-export .sticky { position: static !important; top: auto !important; }
   .pdf-export [data-ticket-id] { color: hsl(var(--foreground)) !important; -webkit-text-fill-color: hsl(var(--foreground)) !important; text-shadow: none !important; }
+  .pdf-export [data-hide-in-pdf="true"] { display: none !important; }
   .pdf-export .w-40 { width: 6rem !important; }
   .pdf-export * { -webkit-font-smoothing: antialiased; }
 }
