@@ -20,7 +20,7 @@ export const generatePDF = async (
     quality = 2
   } = options;
 
-  const element = document.getElementById(elementId);
+  let element = document.getElementById(elementId) || document.getElementById('temp-booking-ticket');
   
   if (!element) {
     throw new Error(`Element with id "${elementId}" not found`);

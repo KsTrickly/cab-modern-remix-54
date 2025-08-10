@@ -28,6 +28,7 @@ interface Booking {
   advance_paid?: boolean;
   payment_status?: string;
   booking_status: string;
+  instructions?: string;
 }
 
 interface BookingEditDialogProps {
@@ -61,7 +62,8 @@ export const BookingEditDialog = ({ booking, isOpen, onClose, onSave }: BookingE
         advance_amount: booking.advance_amount || 0,
         advance_paid: booking.advance_paid || false,
         payment_status: booking.payment_status || 'pending',
-        booking_status: booking.booking_status
+        booking_status: booking.booking_status,
+        instructions: (booking as any).instructions || ''
       });
     }
   }, [booking]);
@@ -300,6 +302,17 @@ export const BookingEditDialog = ({ booking, isOpen, onClose, onSave }: BookingE
               value={formData.destination_address || ''}
               onChange={(e) => handleInputChange('destination_address', e.target.value)}
               rows={3}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="instructions">Ticket Instructions</Label>
+            <Textarea
+              id="instructions"
+              value={(formData as any).instructions || ''}
+              onChange={(e) => handleInputChange('instructions' as keyof Booking, e.target.value)}
+              rows={4}
+              placeholder="e.g., Driver will contact 30 mins before pickup. Please carry valid ID."
             />
           </div>
 

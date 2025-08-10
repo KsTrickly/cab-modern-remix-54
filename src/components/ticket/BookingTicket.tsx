@@ -32,6 +32,7 @@ interface BookingData {
   };
   airport_name?: string;
   package_id?: string;
+  instructions?: string;
 }
 
 interface FareBreakdownData {
@@ -361,6 +362,18 @@ export const BookingTicket: React.FC<BookingTicketProps> = ({
               </div>
             </div>
           </div>
+        </div>
+      </Card>
+
+      {/* Instructions */}
+      <Card className="mb-8 p-6 pdf-pad bg-blue-50 border border-blue-200 shadow-lg">
+        <h3 className="text-xl font-bold text-blue-600 mb-4 border-b border-blue-300 pb-3">
+          Instructions
+        </h3>
+        <div className="text-black whitespace-pre-line text-sm leading-relaxed">
+          {booking.instructions && booking.instructions.trim() !== ''
+            ? booking.instructions
+            : 'No special instructions provided.'}
         </div>
       </Card>
 
