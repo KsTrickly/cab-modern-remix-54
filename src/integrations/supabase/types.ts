@@ -71,6 +71,7 @@ export type Database = {
           destination_city_id: string | null
           destination_name: string | null
           id: string
+          instructions: string | null
           number_of_days: number
           number_of_persons: number | null
           package_id: string | null
@@ -101,6 +102,7 @@ export type Database = {
           destination_city_id?: string | null
           destination_name?: string | null
           id?: string
+          instructions?: string | null
           number_of_days: number
           number_of_persons?: number | null
           package_id?: string | null
@@ -131,6 +133,7 @@ export type Database = {
           destination_city_id?: string | null
           destination_name?: string | null
           id?: string
+          instructions?: string | null
           number_of_days?: number
           number_of_persons?: number | null
           package_id?: string | null
