@@ -161,11 +161,11 @@ export const BookingTicket: React.FC<BookingTicketProps> = ({
       {/* Header */}
       <div className="flex justify-between items-start mb-8 border-b-2 border-blue-200 pb-6">
         <div className="flex items-center">
-          <div className="w-40 h-20 mr-6">
+          <div className="w-40 mr-6">
             <img 
               src="/lovable-uploads/f124bac8-eff9-41ff-bbd5-0552c1b5a1d6.png" 
               alt="Raman Cab Logo"
-              className="w-full h-full object-contain"
+              className="w-full h-auto object-contain"
             />
           </div>
           <div>
@@ -371,9 +371,7 @@ export const BookingTicket: React.FC<BookingTicketProps> = ({
           Instructions
         </h3>
         <div className="text-black whitespace-pre-line text-sm leading-relaxed">
-          {booking.instructions && booking.instructions.trim() !== ''
-            ? booking.instructions
-            : 'No special instructions provided.'}
+          {booking.instructions && booking.instructions.trim() !== '' ? booking.instructions : ''}
         </div>
       </Card>
 

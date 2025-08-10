@@ -13,6 +13,7 @@ import { downloadTicketPDF } from '@/utils/pdfGenerator';
 
 interface Booking {
   id: string;
+  ticket_id?: string;
   user_phone: string;
   user_name?: string;
   user_email?: string;
@@ -173,9 +174,10 @@ export const BookingManagement = () => {
 
     // Apply text filters
     if (filters.bookingId || filters.ticketId) {
-      const searchId = filters.bookingId || filters.ticketId;
+      const searchId = (filters.bookingId || filters.ticketId).toLowerCase();
       filtered = filtered.filter(booking => 
-        booking.id.toLowerCase().includes(searchId.toLowerCase())
+        booking.id.toLowerCase().includes(searchId) ||
+        (booking.ticket_id?.toLowerCase().includes(searchId) ?? false)
       );
     }
 
@@ -321,7 +323,7 @@ export const BookingManagement = () => {
 
       iframe.onload = async () => {
         try {
-          const ticketId = `RAC${booking.id.slice(-8).toUpperCase()}`;
+          const ticketId = booking.ticket_id || `RAC${booking.id.slice(-8).toUpperCase()}`;
           // Wait a bit for the content to load
           setTimeout(async () => {
             try {
