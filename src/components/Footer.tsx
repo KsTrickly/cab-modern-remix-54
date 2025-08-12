@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const cityServices = [
-    { name: 'Delhi', path: '/cities/delhi' },
-    { name: 'Indore', path: '/cities/indore' },
-    { name: 'Goa', path: '/cities/goa' },
-    { name: 'Dwarka', path: '/cities/dwarka' },
-    { name: 'Dalhousie', path: '/cities/dalhausie' },
-    { name: 'Coimbatore', path: '/cities/coimbatore' },
+    { name: 'Delhi', path: '/cities/delhi.html' },
+    { name: 'Indore', path: '/cities/indore.html' },
+    { name: 'Goa', path: '/cities/goa.html' },
+    { name: 'Dwarka', path: '/cities/dwarka.html' },
+    { name: 'Dalhousie', path: '/cities/dalhousie.html' },
+    { name: 'Coimbatore', path: '/cities/coimbatore.html' },
     { name: 'Bhubaneshwar', path: '/cities/bhubaneshwar' },
     { name: 'Chitrakoot', path: '/cities/chitrakoot' },
     { name: 'Rameshwaram', path: '/cities/rameshwaram' },
