@@ -39,65 +39,75 @@ const BookingTicketPage = () => {
     enabled: !!bookingId
   });
 
-  // Fetch vehicle rate data for the specific booking
+  // Fetch vehicle rate data for the specific booking with proper fallback to common_rates
   const { data: vehicleRate } = useQuery({
     queryKey: ['vehicleRate', booking?.vehicle_id, booking?.pickup_city_id, booking?.destination_city_id, booking?.package_id, booking?.trip_type],
     queryFn: async () => {
       if (!booking?.vehicle_id || !booking?.pickup_city_id) return null;
 
-      // For local trips, fetch by package_id
-      if (booking.trip_type === 'local' && booking.package_id) {
-        const { data, error } = await supabase
-          .from('vehicle_rates')
-          .select('*')
-          .eq('vehicle_id', booking.vehicle_id)
-          .eq('pickup_city_id', booking.pickup_city_id)
-          .eq('package_id', booking.package_id)
-          .eq('trip_type', 'local')
-          .eq('is_active', true)
-          .single();
+      // Normalize trip type values to match DB
+      const tripTypeMap: Record<string, string> = {
+        round: 'round_trip',
+        oneway: 'one_way',
+        airport: 'airport',
+        local: 'local',
+      };
+      const tripTypeFilter = tripTypeMap[booking.trip_type] || 'round_trip';
 
-        if (error) {
-          console.error('Error fetching local vehicle rate:', error);
-          return null;
+      // Helper: try fetching a specific vehicle rate
+      const fetchSpecificRate = async () => {
+        if (booking.trip_type === 'local' && booking.package_id) {
+          const { data, error } = await supabase
+            .from('vehicle_rates')
+            .select('*')
+            .eq('vehicle_id', booking.vehicle_id)
+            .eq('pickup_city_id', booking.pickup_city_id)
+            .eq('package_id', booking.package_id)
+            .eq('trip_type', 'local')
+            .eq('is_active', true)
+            .maybeSingle();
+          if (error) console.error('Error fetching local vehicle rate:', error);
+          return data;
         }
-        return data;
-      }
 
-      // For other trip types, fetch by pickup and destination cities
-      if (booking.destination_city_id) {
-        const { data, error } = await supabase
-          .from('vehicle_rates')
-          .select('*')
-          .eq('vehicle_id', booking.vehicle_id)
-          .eq('pickup_city_id', booking.pickup_city_id)
-          .eq('destination_city_id', booking.destination_city_id)
-          .eq('trip_type', booking.trip_type === 'round' ? 'round_trip' : 'oneway_trip')
-          .eq('is_active', true)
-          .single();
-
-        if (error) {
-          console.error('Error fetching vehicle rate:', error);
-          return null;
+        if (booking.destination_city_id) {
+          const { data, error } = await supabase
+            .from('vehicle_rates')
+            .select('*')
+            .eq('vehicle_id', booking.vehicle_id)
+            .eq('pickup_city_id', booking.pickup_city_id)
+            .eq('destination_city_id', booking.destination_city_id)
+            .eq('trip_type', tripTypeFilter)
+            .eq('is_active', true)
+            .maybeSingle();
+          if (error) console.error('Error fetching vehicle rate:', error);
+          return data;
         }
-        return data;
-      }
 
-      // Fallback to common rates if no specific rate found
-      const { data, error } = await supabase
-        .from('common_rates')
-        .select('*')
-        .eq('vehicle_id', booking.vehicle_id)
-        .eq('pickup_city_id', booking.pickup_city_id)
-        .eq('trip_type', booking.trip_type === 'round' ? 'round_trip' : 'oneway_trip')
-        .eq('is_active', true)
-        .single();
-
-      if (error) {
-        console.error('Error fetching common rate:', error);
         return null;
-      }
-      return data;
+      };
+
+      // Helper: fallback to common rates
+      const fetchCommonRate = async () => {
+        const { data, error } = await supabase
+          .from('common_rates')
+          .select('*')
+          .eq('vehicle_id', booking.vehicle_id)
+          .eq('pickup_city_id', booking.pickup_city_id)
+          .eq('trip_type', tripTypeFilter)
+          .eq('is_active', true)
+          .maybeSingle();
+        if (error) {
+          console.error('Error fetching common rate:', error);
+          return null;
+        }
+        return data;
+      };
+
+      // Try specific first, then fallback
+      const specific = await fetchSpecificRate();
+      if (specific) return specific;
+      return await fetchCommonRate();
     },
     enabled: !!booking
   });
