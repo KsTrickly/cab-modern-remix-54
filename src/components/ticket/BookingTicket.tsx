@@ -33,6 +33,7 @@ interface BookingData {
   airport_name?: string;
   package_id?: string;
   instructions?: string;
+  extra_per_km_rate?: number;
 }
 
 interface FareBreakdownData {
@@ -154,7 +155,7 @@ export const BookingTicket: React.FC<BookingTicketProps> = ({
   const includedKm = fareBreakdown.includedKm || (booking.number_of_days * (fareBreakdown.dailyKmLimit || 300));
   const extraKm = fareBreakdown.extraKm || 0;
   const dailyKmLimit = fareBreakdown.dailyKmLimit || 300;
-  const extraPerKmCharge = fareBreakdown.extraPerKmCharge || 15;
+  const extraPerKmCharge = booking.extra_per_km_rate || fareBreakdown.extraPerKmCharge || 15;
 
   return (
     <div id="booking-ticket" className="max-w-4xl mx-auto bg-white text-black p-8 shadow-2xl rounded-lg border border-blue-200">

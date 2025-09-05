@@ -7,7 +7,7 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "12.2.3 (519615d)"
@@ -70,6 +70,7 @@ export type Database = {
           destination_address: string | null
           destination_city_id: string | null
           destination_name: string | null
+          extra_per_km_rate: number | null
           id: string
           instructions: string | null
           number_of_days: number
@@ -101,6 +102,7 @@ export type Database = {
           destination_address?: string | null
           destination_city_id?: string | null
           destination_name?: string | null
+          extra_per_km_rate?: number | null
           id?: string
           instructions?: string | null
           number_of_days: number
@@ -132,6 +134,7 @@ export type Database = {
           destination_address?: string | null
           destination_city_id?: string | null
           destination_name?: string | null
+          extra_per_km_rate?: number | null
           id?: string
           instructions?: string | null
           number_of_days?: number
@@ -190,6 +193,126 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      chatbot_config: {
+        Row: {
+          completion_message: string
+          created_at: string
+          id: string
+          is_enabled: boolean
+          updated_at: string
+          welcome_message: string
+        }
+        Insert: {
+          completion_message?: string
+          created_at?: string
+          id?: string
+          is_enabled?: boolean
+          updated_at?: string
+          welcome_message?: string
+        }
+        Update: {
+          completion_message?: string
+          created_at?: string
+          id?: string
+          is_enabled?: boolean
+          updated_at?: string
+          welcome_message?: string
+        }
+        Relationships: []
+      }
+      chatbot_questions: {
+        Row: {
+          choices: Json | null
+          created_at: string
+          id: string
+          is_active: boolean
+          question_text: string
+          question_type: string
+          sequence_order: number
+          updated_at: string
+        }
+        Insert: {
+          choices?: Json | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          question_text: string
+          question_type?: string
+          sequence_order: number
+          updated_at?: string
+        }
+        Update: {
+          choices?: Json | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          question_text?: string
+          question_type?: string
+          sequence_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      chatbot_responses: {
+        Row: {
+          answer_text: string
+          answered_at: string
+          created_at: string
+          id: string
+          question_id: string
+          session_id: string
+        }
+        Insert: {
+          answer_text: string
+          answered_at?: string
+          created_at?: string
+          id?: string
+          question_id: string
+          session_id: string
+        }
+        Update: {
+          answer_text?: string
+          answered_at?: string
+          created_at?: string
+          id?: string
+          question_id?: string
+          session_id?: string
+        }
+        Relationships: []
+      }
+      chatbot_sessions: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          id: string
+          started_at: string
+          status: string
+          updated_at: string
+          user_email: string | null
+          user_phone: string | null
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          started_at?: string
+          status?: string
+          updated_at?: string
+          user_email?: string | null
+          user_phone?: string | null
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          started_at?: string
+          status?: string
+          updated_at?: string
+          user_email?: string | null
+          user_phone?: string | null
+        }
+        Relationships: []
       }
       cities: {
         Row: {
@@ -520,6 +643,45 @@ export type Database = {
           },
         ]
       }
+      reviews: {
+        Row: {
+          created_at: string
+          id: string
+          is_approved: boolean
+          is_featured: boolean
+          rating: number
+          review_text: string
+          updated_at: string
+          user_email: string | null
+          user_name: string
+          user_phone: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_approved?: boolean
+          is_featured?: boolean
+          rating: number
+          review_text: string
+          updated_at?: string
+          user_email?: string | null
+          user_name: string
+          user_phone?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_approved?: boolean
+          is_featured?: boolean
+          rating?: number
+          review_text?: string
+          updated_at?: string
+          user_email?: string | null
+          user_name?: string
+          user_phone?: string | null
+        }
+        Relationships: []
+      }
       round_trip_bookings: {
         Row: {
           additional_city_id: string | null
@@ -582,8 +744,63 @@ export type Database = {
           },
         ]
       }
+      user_profiles: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          mobile_number: string
+          name: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          mobile_number: string
+          name: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          mobile_number?: string
+          name?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_wallets: {
+        Row: {
+          created_at: string
+          id: string
+          raman_coins: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          raman_coins?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          raman_coins?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       vehicle_rates: {
         Row: {
+          airport_name: string | null
           base_fare: number | null
           created_at: string
           daily_km_limit: number
@@ -603,6 +820,7 @@ export type Database = {
           vehicle_id: string | null
         }
         Insert: {
+          airport_name?: string | null
           base_fare?: number | null
           created_at?: string
           daily_km_limit: number
@@ -622,6 +840,7 @@ export type Database = {
           vehicle_id?: string | null
         }
         Update: {
+          airport_name?: string | null
           base_fare?: number | null
           created_at?: string
           daily_km_limit?: number
@@ -707,18 +926,58 @@ export type Database = {
         }
         Relationships: []
       }
+      wallet_transactions: {
+        Row: {
+          admin_user_id: string | null
+          amount: number
+          created_at: string
+          description: string | null
+          id: string
+          transaction_type: string
+          user_id: string
+        }
+        Insert: {
+          admin_user_id?: string | null
+          amount: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          transaction_type: string
+          user_id: string
+        }
+        Update: {
+          admin_user_id?: string | null
+          amount?: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          transaction_type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
       calculate_distance_between_cities: {
-        Args: { pickup_city_name: string; destination_city_name: string }
+        Args: { destination_city_name: string; pickup_city_name: string }
         Returns: number
       }
       generate_sequential_ticket_id: {
         Args: Record<PropertyKey, never>
         Returns: string
+      }
+      update_wallet_balance: {
+        Args: {
+          admin_id?: string
+          amount: number
+          description?: string
+          target_user_id: string
+          transaction_type: string
+        }
+        Returns: boolean
       }
     }
     Enums: {

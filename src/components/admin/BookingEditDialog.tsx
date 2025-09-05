@@ -24,6 +24,7 @@ interface Booking {
   number_of_persons?: number;
   total_amount: number;
   total_km_override?: number | null;
+  extra_per_km_rate?: number | null;
   advance_amount?: number;
   advance_paid?: boolean;
   payment_status?: string;
@@ -59,6 +60,7 @@ export const BookingEditDialog = ({ booking, isOpen, onClose, onSave }: BookingE
         number_of_persons: booking.number_of_persons || 1,
         total_amount: booking.total_amount,
         total_km_override: (booking as any).total_km_override ?? null,
+        extra_per_km_rate: (booking as any).extra_per_km_rate ?? null,
         advance_amount: booking.advance_amount || 0,
         advance_paid: booking.advance_paid || false,
         payment_status: booking.payment_status || 'pending',
@@ -224,6 +226,21 @@ export const BookingEditDialog = ({ booking, isOpen, onClose, onSave }: BookingE
                 onChange={(e) => {
                   const v = e.target.value;
                   handleInputChange('total_km_override' as keyof Booking, v === '' ? null : parseFloat(v));
+                }}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="extra_per_km_rate">Extra per KM Rate (₹)</Label>
+              <Input
+                id="extra_per_km_rate"
+                type="number"
+                step="0.01"
+                min="0"
+                value={formData.extra_per_km_rate ?? ''}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  handleInputChange('extra_per_km_rate' as keyof Booking, v === '' ? null : parseFloat(v));
                 }}
               />
             </div>
