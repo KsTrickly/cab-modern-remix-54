@@ -1080,6 +1080,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      verify_blog_admin: {
+        Args: { p_password: string; p_username: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never

@@ -12,6 +12,7 @@ import BookingForm from "./pages/BookingForm";
 import BookingTicketPage from "./pages/BookingTicket";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
+import HomePageTesting from "./pages/HomePageTesting";
 
 // Import city pages
 import Ayodhya from "./pages/Ayodhya";
@@ -44,6 +45,7 @@ function App() {
             <Route path="/booking-form" element={<BookingForm />} />
             <Route path="/ticket/:bookingId" element={<BookingTicketPage />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/home-testing" element={<HomePageTesting />} />
             
             {/* City routes */}
             <Route path="/ayodhya" element={<Ayodhya />} />
